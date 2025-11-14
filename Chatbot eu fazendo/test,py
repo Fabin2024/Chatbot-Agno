@@ -1,0 +1,31 @@
+from agno.tools.googlesheets import GoogleSheetsTools
+
+# ID da sua planilha
+SPREADSHEET_ID = "1gU14rrzskA3hJT8aJcYCFYlK3Rr3zvWyjni68ABfL5w"
+
+# Caminho do JSON da conta de serviço
+SERVICE_ACCOUNT_PATH = "service_account.json"
+
+# Instancia o conector
+gs = GoogleSheetsTools(
+    enable_create_sheet=True,
+    enable_read_sheet=True,
+    enable_update_sheet=True,
+    service_account_path=SERVICE_ACCOUNT_PATH,
+    spreadsheet_id=SPREADSHEET_ID,
+)
+
+# 🔍 Teste 1 — listar abas
+print("📄 Abas encontradas:")
+print(gs.get_sheet_names())
+
+# 🔍 Teste 2 — ler conteúdo da primeira aba
+first_sheet = gs.get_sheet_names()[0]
+print(f"\n📖 Lendo conteúdo da aba: {first_sheet}")
+data = gs.read_sheet(f"{first_sheet}!A1:E10")
+print(data)
+
+# 🔍 Teste 3 — atualizar célula
+print("\n✏️ Atualizando célula de teste...")
+gs.update_sheet(f"{first_sheet}!A1", [["✅ Conexão funcionando!"]])
+print("✅ Atualização feita com sucesso!")
